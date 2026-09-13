@@ -1,0 +1,13 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Install rt-suite from the wheel (copies from repo root into image)
+# (docker variant — see Dockerfile)
+RUN pip install --no-cache-dir rt_suite-0.3.1-py3-none-any.whl
+
+# Render sets PORT automatically (default 10000); this default suits HF Spaces too
+ENV PORT=7860
+EXPOSE 7860
+
+CMD ["sh", "-c", "rt-suite-serve --host 0.0.0.0 --port ${PORT}"]
